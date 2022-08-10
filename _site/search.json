@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "{‘data Science, statistics and more…’}"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My Blog!",
+    "section": "",
+    "text": "Hello, world! I wrote this blog to make notes of all insights that I discovered on my data science journey. I love wrangling and exploring data."
+  },
+  {
+    "objectID": "posts/cause-of-wildfires-in-california/index.html",
+    "href": "posts/cause-of-wildfires-in-california/index.html",
+    "title": "Cause of Wildfires in California from 1878 - 2020",
+    "section": "",
+    "text": "Important facts about California Wildfire."
+  },
+  {
+    "objectID": "posts/cause-of-wildfires-in-california/index.html#read-data",
+    "href": "posts/cause-of-wildfires-in-california/index.html#read-data",
+    "title": "Cause of Wildfires in California from 1878 - 2020",
+    "section": "1. Read data",
+    "text": "1. Read data\n\n1.1. Import library & dataset\n\n\nShow the code\n# import library\nimport pandas as pd\nimport numpy as np\nimport geopandas as gpd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n%matplotlib inline\n\nimport warnings\nwarnings.filterwarnings('ignore')\n\n# read dataset \ndf = gpd.read_file('fire20_1.gdb')\ndf\n\n\n\n\n\n\n  \n    \n      \n      YEAR_\n      STATE\n      AGENCY\n      UNIT_ID\n      FIRE_NAME\n      INC_NUM\n      ALARM_DATE\n      CONT_DATE\n      CAUSE\n      COMMENTS\n      REPORT_AC\n      GIS_ACRES\n      C_METHOD\n      OBJECTIVE\n      FIRE_NUM\n      Shape_Length\n      Shape_Area\n      geometry\n    \n  \n  \n    \n      0\n      2020\n      CA\n      CDF\n      NEU\n      NELSON\n      00013212\n      2020-06-18T00:00:00+00:00\n      2020-06-23T00:00:00+00:00\n      11.0\n      \n      110.0\n      109.602501\n      1.0\n      1.0\n      None\n      3252.523280\n      4.435447e+05\n      MULTIPOLYGON (((-116841.251 97942.565, -116836...\n    \n    \n      1\n      2020\n      CA\n      CDF\n      NEU\n      AMORUSO\n      00011799\n      2020-06-01T00:00:00+00:00\n      2020-06-04T00:00:00+00:00\n      2.0\n      \n      670.0\n      685.585022\n      1.0\n      1.0\n      None\n      9653.760308\n      2.774464e+06\n      MULTIPOLYGON (((-117328.400 90212.407, -117321...\n    \n    \n      2\n      2020\n      CA\n      CDF\n      NEU\n      ATHENS\n      00018493\n      2020-08-10T00:00:00+00:00\n      2020-03-01T00:00:00+00:00\n      14.0\n      \n      26.0\n      27.300480\n      1.0\n      1.0\n      None\n      1649.643235\n      1.104811e+05\n      MULTIPOLYGON (((-115605.059 92988.787, -115585...\n    \n    \n      3\n      2020\n      CA\n      CDF\n      NEU\n      FLEMING\n      00007619\n      2020-03-31T00:00:00+00:00\n      2020-04-01T00:00:00+00:00\n      9.0\n      \n      13.0\n      12.931550\n      1.0\n      1.0\n      None\n      1577.155857\n      5.233211e+04\n      MULTIPOLYGON (((-110213.270 105975.579, -11020...\n    \n    \n      4\n      2020\n      CA\n      CDF\n      NEU\n      MELANESE\n      00008471\n      2020-04-14T00:00:00+00:00\n      2020-04-19T00:00:00+00:00\n      18.0\n      \n      10.3\n      10.315960\n      1.0\n      1.0\n      None\n      1035.787625\n      4.174722e+04\n      MULTIPOLYGON (((-111793.600 164243.615, -11177...\n    \n    \n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n    \n    \n      21313\n      2019\n      CA\n      CCO\n      LAC\n      MUREAU\n      None\n      2019-10-30T00:00:00+00:00\n      2019-10-30T00:00:00+00:00\n      NaN\n      None\n      NaN\n      6.297734\n      NaN\n      1.0\n      None\n      741.886109\n      2.548602e+04\n      MULTIPOLYGON (((122180.088 -428557.696, 122181...\n    \n    \n      21314\n      2019\n      CA\n      LRA\n      None\n      OAK\n      None\n      2019-10-28T00:00:00+00:00\n      2019-10-28T00:00:00+00:00\n      14.0\n      NPS#596 Rapid ROS in light grassy 1yr old fuels\n      NaN\n      8.482671\n      8.0\n      1.0\n      None\n      1004.069271\n      3.432815e+04\n      MULTIPOLYGON (((120221.043 -428836.863, 120220...\n    \n    \n      21315\n      2019\n      CA\n      LRA\n      LDF\n      BARHAM\n      00000845\n      2019-11-09T00:00:00+00:00\n      2019-11-10T00:00:00+00:00\n      14.0\n      LACFD 0845\n      NaN\n      64.888229\n      8.0\n      1.0\n      None\n      3383.890106\n      2.625933e+05\n      MULTIPOLYGON (((153212.742 -428811.823, 153216...\n    \n    \n      21316\n      2019\n      CA\n      NPS\n      MNP\n      STAR\n      00013598\n      None\n      None\n      14.0\n      None\n      NaN\n      66.587181\n      8.0\n      1.0\n      None\n      3897.065019\n      2.694688e+05\n      MULTIPOLYGON (((409025.711 -295687.235, 409021...\n    \n    \n      21317\n      2019\n      CA\n      LRA\n      LDF\n      SADDLE RIDGE\n      00001582\n      2019-10-10T00:00:00+00:00\n      2019-10-31T00:00:00+00:00\n      14.0\n      shape from GEOMAC, dat from CAL FIRE web\n      8799.0\n      8799.325195\n      7.0\n      1.0\n      None\n      71393.089537\n      3.560961e+07\n      MULTIPOLYGON (((132094.329 -414240.303, 132019...\n    \n  \n\n21318 rows × 18 columns\n\n\n\n\n\n1.2. Data Summary\n\n\nShow the code\n#dataset information\ndf.info()\n\n\n<class 'geopandas.geodataframe.GeoDataFrame'>\nRangeIndex: 21318 entries, 0 to 21317\nData columns (total 18 columns):\n #   Column        Non-Null Count  Dtype   \n---  ------        --------------  -----   \n 0   YEAR_         21250 non-null  object  \n 1   STATE         21315 non-null  object  \n 2   AGENCY        21313 non-null  object  \n 3   UNIT_ID       21298 non-null  object  \n 4   FIRE_NAME     21304 non-null  object  \n 5   INC_NUM       20677 non-null  object  \n 6   ALARM_DATE    15954 non-null  object  \n 7   CONT_DATE     8638 non-null   object  \n 8   CAUSE         21270 non-null  float64 \n 9   COMMENTS      19547 non-null  object  \n 10  REPORT_AC     8767 non-null   float64 \n 11  GIS_ACRES     21311 non-null  float64 \n 12  C_METHOD      9096 non-null   float64 \n 13  OBJECTIVE     21123 non-null  float64 \n 14  FIRE_NUM      17759 non-null  object  \n 15  Shape_Length  21318 non-null  float64 \n 16  Shape_Area    21318 non-null  float64 \n 17  geometry      21318 non-null  geometry\ndtypes: float64(7), geometry(1), object(10)\nmemory usage: 2.9+ MB"
+  },
+  {
+    "objectID": "posts/cause-of-wildfires-in-california/index.html#aggregate-the-data",
+    "href": "posts/cause-of-wildfires-in-california/index.html#aggregate-the-data",
+    "title": "Cause of Wildfires in California from 1878 - 2020",
+    "section": "2. Aggregate the data",
+    "text": "2. Aggregate the data\n\nPivoting\n\n\nShow the code\nfrom mitosheet import *; register_analysis(\"id-ynheayqgsj\");\n    \n# Pivoted into df\ntmp_df = df[['YEAR_', 'CAUSE']]\npivot_table = tmp_df.pivot_table(\n    index=['YEAR_'],\n    columns=['CAUSE'],\n    values=['CAUSE'],\n    aggfunc={'CAUSE': ['count']}\n)\npivot_table.set_axis([flatten_column_header(col) for col in pivot_table.keys()], axis=1, inplace=True)\ndf_pivot = pivot_table.reset_index()\n\n# sum df_pivot\ncause = df_pivot.sum()\n\n# create new frame\ncause_df = cause.to_frame()\ncause_df.reset_index(inplace=True)\n\n# column names\ncause_df.columns = ['CAUSE', 'COUNT']\n\n# drop label '0'\ncause_df = cause_df.drop(labels=0, axis=0)\n\n# change format\ncause_df['COUNT'] = cause_df['COUNT'].astype(int)\n\n# sorting\ncause_df = cause_df.sort_values(by=['COUNT'],ascending = False)\n\n# extract string\ncause_df['CAUSE'] = cause_df.CAUSE.str.extract('(\\d+)')\ncause_df\n\n\n\n\n\n\n  \n    \n      \n      CAUSE\n      COUNT\n    \n  \n  \n    \n      14\n      14\n      9475\n    \n    \n      1\n      1\n      3454\n    \n    \n      9\n      9\n      3379\n    \n    \n      2\n      2\n      1246\n    \n    \n      7\n      7\n      903\n    \n    \n      5\n      5\n      723\n    \n    \n      10\n      10\n      454\n    \n    \n      11\n      11\n      412\n    \n    \n      4\n      4\n      380\n    \n    \n      3\n      3\n      342\n    \n    \n      8\n      8\n      196\n    \n    \n      17\n      18\n      90\n    \n    \n      6\n      6\n      80\n    \n    \n      15\n      15\n      21\n    \n    \n      18\n      19\n      17\n    \n    \n      16\n      16\n      14\n    \n    \n      13\n      13\n      11\n    \n    \n      12\n      12\n      5\n    \n  \n\n\n\n\n\n\nShow the code\ncause_df['CAUSE'] = cause_df.CAUSE.str.extract('(\\d+)')\ncause_df\n\n\n\n\n\n\n  \n    \n      \n      CAUSE\n      COUNT\n    \n  \n  \n    \n      14\n      14\n      9475\n    \n    \n      1\n      1\n      3454\n    \n    \n      9\n      9\n      3379\n    \n    \n      2\n      2\n      1246\n    \n    \n      7\n      7\n      903\n    \n    \n      5\n      5\n      723\n    \n    \n      10\n      10\n      454\n    \n    \n      11\n      11\n      412\n    \n    \n      4\n      4\n      380\n    \n    \n      3\n      3\n      342\n    \n    \n      8\n      8\n      196\n    \n    \n      17\n      18\n      90\n    \n    \n      6\n      6\n      80\n    \n    \n      15\n      15\n      21\n    \n    \n      18\n      19\n      17\n    \n    \n      16\n      16\n      14\n    \n    \n      13\n      13\n      11\n    \n    \n      12\n      12\n      5\n    \n  \n\n\n\n\n\n\nCreate categories\n\n\nShow the code\ncause_code = {'CAUSE':['1','2', '3', '4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19'], \n        'Description':['Lightning','Equipment Use','Smoking','Campfire','Debris','Railroad','Arson','Playing with Fire','Miscellaneous','Vehicle','Power Line','Firefighter Training','Non-Firefighter Training','Unidentified','Structure','Aircraft','Volcanic','Escaped Prescribed Burn','Illegal Alien Campfire']}\ncause_code = pd.DataFrame(cause_code)\ncause_code\n\n\n\n\n\n\n  \n    \n      \n      CAUSE\n      Description\n    \n  \n  \n    \n      0\n      1\n      Lightning\n    \n    \n      1\n      2\n      Equipment Use\n    \n    \n      2\n      3\n      Smoking\n    \n    \n      3\n      4\n      Campfire\n    \n    \n      4\n      5\n      Debris\n    \n    \n      5\n      6\n      Railroad\n    \n    \n      6\n      7\n      Arson\n    \n    \n      7\n      8\n      Playing with Fire\n    \n    \n      8\n      9\n      Miscellaneous\n    \n    \n      9\n      10\n      Vehicle\n    \n    \n      10\n      11\n      Power Line\n    \n    \n      11\n      12\n      Firefighter Training\n    \n    \n      12\n      13\n      Non-Firefighter Training\n    \n    \n      13\n      14\n      Unidentified\n    \n    \n      14\n      15\n      Structure\n    \n    \n      15\n      16\n      Aircraft\n    \n    \n      16\n      17\n      Volcanic\n    \n    \n      17\n      18\n      Escaped Prescribed Burn\n    \n    \n      18\n      19\n      Illegal Alien Campfire\n    \n  \n\n\n\n\n\nShow the code\ncause_final = pd.merge(cause_df,cause_code,left_on='CAUSE',right_on='CAUSE')\n\n\n\nShow the code\ncause_final = cause_final[['Description','COUNT']]\ncause_final\n\n\n\n\n\n\n  \n    \n      \n      Description\n      COUNT\n    \n  \n  \n    \n      0\n      Unidentified\n      9475\n    \n    \n      1\n      Lightning\n      3454\n    \n    \n      2\n      Miscellaneous\n      3379\n    \n    \n      3\n      Equipment Use\n      1246\n    \n    \n      4\n      Arson\n      903\n    \n    \n      5\n      Debris\n      723\n    \n    \n      6\n      Vehicle\n      454\n    \n    \n      7\n      Power Line\n      412\n    \n    \n      8\n      Campfire\n      380\n    \n    \n      9\n      Smoking\n      342\n    \n    \n      10\n      Playing with Fire\n      196\n    \n    \n      11\n      Escaped Prescribed Burn\n      90\n    \n    \n      12\n      Railroad\n      80\n    \n    \n      13\n      Structure\n      21\n    \n    \n      14\n      Illegal Alien Campfire\n      17\n    \n    \n      15\n      Aircraft\n      14\n    \n    \n      16\n      Non-Firefighter Training\n      11\n    \n    \n      17\n      Firefighter Training\n      5\n    \n  \n\n\n\n\n\n\nData visualization\n\n\nShow the code\nax = sns.barplot(x = 'COUNT', y = 'Description' , data = cause_final);\nsns.set_context(\"paper\")\nplt.title(\" Wildfire by cause from 1878 -2020\")\nplt.savefig(\"wildfire_by_cause.png\")\nplt.show()"
+  },
+  {
+    "objectID": "posts/cause-of-wildfires-in-california/index.html#source",
+    "href": "posts/cause-of-wildfires-in-california/index.html#source",
+    "title": "Cause of Wildfires in California from 1878 - 2020",
+    "section": "3. Source",
+    "text": "3. Source\n\nWebsite : https://frap.fire.ca.gov/"
+  },
+  {
+    "objectID": "posts/lightnings-and-drought/index.html",
+    "href": "posts/lightnings-and-drought/index.html",
+    "title": "Lightnings and Drought",
+    "section": "",
+    "text": "I found an interesting paper about lightning patterns and drought in California."
+  },
+  {
+    "objectID": "posts/lightnings-and-drought/index.html#drought-monitoring",
+    "href": "posts/lightnings-and-drought/index.html#drought-monitoring",
+    "title": "Lightnings and Drought",
+    "section": "Drought monitoring",
+    "text": "Drought monitoring\n\nThis pie chart taken from https://droughtmonitor.unl.edu/DmData/GISData.aspx , showing data in July,19th 2022. The data is taken and updated every week.We can also compare the drought level time to time on this website.\n\nFrom the table we can see that the D4 category increased start from month 5 to today (24 July 2022)."
+  },
+  {
+    "objectID": "posts/lightnings-and-drought/index.html#lightning-patterns",
+    "href": "posts/lightnings-and-drought/index.html#lightning-patterns",
+    "title": "Lightnings and Drought",
+    "section": "Lightning patterns",
+    "text": "Lightning patterns"
+  },
+  {
+    "objectID": "posts/lightnings-and-drought/index.html#source",
+    "href": "posts/lightnings-and-drought/index.html#source",
+    "title": "Lightnings and Drought",
+    "section": "Source",
+    "text": "Source\nhttps://droughtmonitor.unl.edu/DmData/GISData.aspx https://www.weather.gov/media/wrh/online_publications/talite/talite1101.pdf"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "{‘data science, statistics, and more…’}",
+    "section": "",
+    "text": "california\n\n\nwildfire\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJul 24, 2022\n\n\nLulus Adhitya\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\ncalifornia\n\n\nwildfire\n\n\n\n\n\n\n\n\n\n\n\nJul 24, 2022\n\n\nLulus Adhitya\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nJul 20, 2022\n\n\nLulus Adhitya\n\n\n\n\n\n\nNo matching items"
+  }
+]

@@ -2,9 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/southern-california-weather-analysis/index.html",
-      "/posts/cause-of-wildfires-in-california/index.html",
-      "/posts/lightnings-and-drought/index.html",
+      "/posts/southcal_fireincident_2013_2020/index.html",
+      "/posts/southcal_weather_2010_2020/index.html",
+      "/posts/wildfire_by_cause/index.html",
       "/posts/welcome/index.html"
     ]
   }

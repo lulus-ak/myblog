@@ -195,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <div>
     <div class="abstract">
       <div class="abstract-title">Abstract</div>
-      Exploratory data analysis on Southern California Wildfire Incident - [updated: 18 Sept 2022]
+      Exploratory data analysis on Southern California Wildfire Incident - [updated: 19 Sept 2022]
     </div>
   </div>
   
@@ -210,12 +210,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link active" data-scroll-target="#data-preparation">Data Preparation</a></li>
   <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a>
   <ul class="collapse">
-  <li><a href="#wildfire-in-southern-california-by-year-2013---2020" id="toc-wildfire-in-southern-california-by-year-2013---2020" class="nav-link" data-scroll-target="#wildfire-in-southern-california-by-year-2013---2020">1. Wildfire in Southern California by Year (2013 - 2020)</a></li>
-  <li><a href="#wildfire-in-southern-california-by-month-2013--2020" id="toc-wildfire-in-southern-california-by-month-2013--2020" class="nav-link" data-scroll-target="#wildfire-in-southern-california-by-month-2013--2020">2. Wildfire in Southern California by Month (2013 -2020)</a></li>
-  <li><a href="#wildfire-incident-in-southern-california-2013--2020" id="toc-wildfire-incident-in-southern-california-2013--2020" class="nav-link" data-scroll-target="#wildfire-incident-in-southern-california-2013--2020">3. Wildfire Incident in Southern California (2013 -2020)</a></li>
-  <li><a href="#acresburned-in-southern-california-2013--2020" id="toc-acresburned-in-southern-california-2013--2020" class="nav-link" data-scroll-target="#acresburned-in-southern-california-2013--2020">4. AcresBurned in Southern California (2013 -2020)</a></li>
+  <li><a href="#wildfire-in-southern-california-by-year" id="toc-wildfire-in-southern-california-by-year" class="nav-link" data-scroll-target="#wildfire-in-southern-california-by-year">1. Wildfire in Southern California by Year</a></li>
+  <li><a href="#wildfire-in-southern-california-by-month" id="toc-wildfire-in-southern-california-by-month" class="nav-link" data-scroll-target="#wildfire-in-southern-california-by-month">2. Wildfire in Southern California by Month</a></li>
+  <li><a href="#wildfire-incident-in-southern-california" id="toc-wildfire-incident-in-southern-california" class="nav-link" data-scroll-target="#wildfire-incident-in-southern-california">3. Wildfire Incident in Southern California</a></li>
+  <li><a href="#acresburned-in-southern-california" id="toc-acresburned-in-southern-california" class="nav-link" data-scroll-target="#acresburned-in-southern-california">4. AcresBurned in Southern California</a></li>
+  <li><a href="#averageburned-vs-calfireincidents" id="toc-averageburned-vs-calfireincidents" class="nav-link" data-scroll-target="#averageburned-vs-calfireincidents">5. AverageBurned vs CalFireIncidents</a></li>
+  <li><a href="#average-acresburned-per-incident" id="toc-average-acresburned-per-incident" class="nav-link" data-scroll-target="#average-acresburned-per-incident">6. Average AcresBurned per Incident</a></li>
   </ul></li>
-  <li><a href="#source" id="toc-source" class="nav-link" data-scroll-target="#source">5. Source</a></li>
+  <li><a href="#source" id="toc-source" class="nav-link" data-scroll-target="#source">Source</a></li>
   </ul>
 </nav>
     </div>
@@ -1027,8 +1029,8 @@ memory usage: 472.9+ KB</code></pre>
 </section>
 <section id="exploratory-data-analysis" class="level1">
 <h1>Exploratory Data Analysis</h1>
-<section id="wildfire-in-southern-california-by-year-2013---2020" class="level2">
-<h2 class="anchored" data-anchor-id="wildfire-in-southern-california-by-year-2013---2020">1. Wildfire in Southern California by Year (2013 - 2020)</h2>
+<section id="wildfire-in-southern-california-by-year" class="level2">
+<h2 class="anchored" data-anchor-id="wildfire-in-southern-california-by-year">1. Wildfire in Southern California by Year</h2>
 <div class="cell" data-execution_count="15">
 <details>
 <summary>Show the code</summary>
@@ -1104,16 +1106,17 @@ memory usage: 472.9+ KB</code></pre>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Wildfire in South California by Year (2013 - 2020)"</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>sort_incident <span class="op">=</span> df_fire_year.sort_values(<span class="st">'CalFireIncident'</span>)</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.barplot(data<span class="op">=</span>df_fire_year, x <span class="op">=</span> <span class="st">'Year'</span>, y <span class="op">=</span> <span class="st">'CalFireIncident'</span>, hue<span class="op">=</span><span class="st">'Counties'</span>)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> ax.containers:</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(i,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> ax.containers:</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(i,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
-<section id="wildfire-in-southern-california-by-month-2013--2020" class="level2">
-<h2 class="anchored" data-anchor-id="wildfire-in-southern-california-by-month-2013--2020">2. Wildfire in Southern California by Month (2013 -2020)</h2>
+<section id="wildfire-in-southern-california-by-month" class="level2">
+<h2 class="anchored" data-anchor-id="wildfire-in-southern-california-by-month">2. Wildfire in Southern California by Month</h2>
 <div class="cell" data-execution_count="17">
 <details>
 <summary>Show the code</summary>
@@ -1189,16 +1192,17 @@ memory usage: 472.9+ KB</code></pre>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Wildfire in South California by Month (2013 - 2020)"</span>)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>sort_incident <span class="op">=</span> df_fire_year.sort_values(<span class="st">'CalFireIncident'</span>)</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.barplot(data<span class="op">=</span>df_fire_month, x <span class="op">=</span> <span class="st">'Month'</span>, y <span class="op">=</span> <span class="st">'CalFireIncident'</span>, hue<span class="op">=</span><span class="st">'Counties'</span>)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> ax.containers:</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(i,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper right'</span>)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> ax.containers:</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(i,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <p><img src="index_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
-<section id="wildfire-incident-in-southern-california-2013--2020" class="level2">
-<h2 class="anchored" data-anchor-id="wildfire-incident-in-southern-california-2013--2020">3. Wildfire Incident in Southern California (2013 -2020)</h2>
+<section id="wildfire-incident-in-southern-california" class="level2">
+<h2 class="anchored" data-anchor-id="wildfire-incident-in-southern-california">3. Wildfire Incident in Southern California</h2>
 <div class="cell" data-execution_count="19">
 <details>
 <summary>Show the code</summary>
@@ -1379,8 +1383,8 @@ memory usage: 472.9+ KB</code></pre>
 </div>
 </div>
 </section>
-<section id="acresburned-in-southern-california-2013--2020" class="level2">
-<h2 class="anchored" data-anchor-id="acresburned-in-southern-california-2013--2020">4. AcresBurned in Southern California (2013 -2020)</h2>
+<section id="acresburned-in-southern-california" class="level2">
+<h2 class="anchored" data-anchor-id="acresburned-in-southern-california">4. AcresBurned in Southern California</h2>
 <div class="cell" data-execution_count="21">
 <details>
 <summary>Show the code</summary>
@@ -1396,9 +1400,127 @@ memory usage: 472.9+ KB</code></pre>
 </div>
 </div>
 </section>
+<section id="averageburned-vs-calfireincidents" class="level2">
+<h2 class="anchored" data-anchor-id="averageburned-vs-calfireincidents">5. AverageBurned vs CalFireIncidents</h2>
+<div class="cell" data-execution_count="22">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>]<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">8</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"AverageBurned vs CalFireIncident"</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>sort_incident <span class="op">=</span> df_incident.sort_values(<span class="st">'CalFireIncident'</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.barplot(data<span class="op">=</span>sort_incident, x <span class="op">=</span> <span class="st">'Counties'</span>, y <span class="op">=</span> <span class="st">'CalFireIncident'</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.barplot(data<span class="op">=</span>sort_incident, x <span class="op">=</span> <span class="st">'Counties'</span>, y <span class="op">=</span> <span class="st">'AcresBurned'</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> ax.containers:</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(i,fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="average-acresburned-per-incident" class="level2">
+<h2 class="anchored" data-anchor-id="average-acresburned-per-incident">6. Average AcresBurned per Incident</h2>
+<div class="cell" data-execution_count="23">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>burn_ratio <span class="op">=</span> df_incident[[<span class="st">'Counties'</span>,<span class="st">'CalFireIncident'</span>,<span class="st">'AcresBurned'</span>]]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>burn_ratio[<span class="st">'AverageBurned'</span>] <span class="op">=</span> burn_ratio[<span class="st">'AcresBurned'</span>]<span class="op">/</span> burn_ratio[<span class="st">'CalFireIncident'</span>]</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>burn_ratio</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="23">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Counties</th>
+      <th>CalFireIncident</th>
+      <th>AcresBurned</th>
+      <th>AverageBurned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Los Angeles</td>
+      <td>9.0</td>
+      <td>194580.0</td>
+      <td>21620.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Orange</td>
+      <td>7.0</td>
+      <td>36764.0</td>
+      <td>5252.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Riverside</td>
+      <td>133.0</td>
+      <td>97362.0</td>
+      <td>732.045113</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>San Bernardino</td>
+      <td>25.0</td>
+      <td>90897.0</td>
+      <td>3635.880000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>San Diego</td>
+      <td>64.0</td>
+      <td>65394.0</td>
+      <td>1021.781250</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>San Luis Obispo</td>
+      <td>57.0</td>
+      <td>98757.0</td>
+      <td>1732.578947</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Santa Barbara</td>
+      <td>15.0</td>
+      <td>362568.0</td>
+      <td>24171.200000</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Ventura</td>
+      <td>17.0</td>
+      <td>428304.0</td>
+      <td>25194.352941</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'figure.figsize'</span>]<span class="op">=</span>(<span class="dv">14</span>,<span class="dv">8</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Average AcresBurned per Incident in Southern California(2013 - 2020)"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>sort_burned <span class="op">=</span> burn_ratio.sort_values(<span class="st">'AverageBurned'</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.barplot(data<span class="op">=</span>sort_burned, x <span class="op">=</span> <span class="st">'Counties'</span>, y <span class="op">=</span> <span class="st">'AverageBurned'</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> ax.containers:</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    ax.bar_label(i,fontsize<span class="op">=</span><span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
 </section>
 <section id="source" class="level1">
-<h1>5. Source</h1>
+<h1>Source</h1>
 <p>“The dataset contains the list of Wildfires that has occurred in California between 2013 and 2020. The dataset contains the location where wildfires have occurred including the County name, latitude and longitude values and also details on when the wildfire has started.”</p>
 <p>https://www.kaggle.com/datasets/ananthu017/california-wildfire-incidents-20132020</p>
 

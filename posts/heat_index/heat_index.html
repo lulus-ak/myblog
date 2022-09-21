@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.28">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Lulus Adhitya">
+<meta name="dcterms.date" content="2022-09-22">
+
+<title>Home - Calculate Heat Index of Southern California</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Home</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">Lulus Adhitya Kahono</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Calculate Heat Index of Southern California</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">california</div>
+                <div class="quarto-category">analysis</div>
+                <div class="quarto-category">wildfire</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Lulus Adhitya </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 22, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="abstract-title">Abstract</div>
+      Calculate heat index using South California weather data 2010-2020.[updated: 22 Sept 2022]
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link active" data-scroll-target="#data-preparation">Data Preparation</a></li>
+  <li><a href="#heat-index-by-month" id="toc-heat-index-by-month" class="nav-link" data-scroll-target="#heat-index-by-month">Heat Index by Month</a>
+  <ul class="collapse">
+  <li><a href="#january" id="toc-january" class="nav-link" data-scroll-target="#january">1. January</a></li>
+  <li><a href="#february" id="toc-february" class="nav-link" data-scroll-target="#february">2. February</a></li>
+  <li><a href="#march" id="toc-march" class="nav-link" data-scroll-target="#march">3. March</a></li>
+  <li><a href="#april" id="toc-april" class="nav-link" data-scroll-target="#april">4. April</a></li>
+  <li><a href="#may" id="toc-may" class="nav-link" data-scroll-target="#may">5. May</a></li>
+  <li><a href="#june" id="toc-june" class="nav-link" data-scroll-target="#june">6. June</a></li>
+  <li><a href="#july" id="toc-july" class="nav-link" data-scroll-target="#july">7. July</a></li>
+  <li><a href="#august" id="toc-august" class="nav-link" data-scroll-target="#august">8. August</a></li>
+  <li><a href="#september" id="toc-september" class="nav-link" data-scroll-target="#september">9. September</a></li>
+  <li><a href="#october" id="toc-october" class="nav-link" data-scroll-target="#october">10. October</a></li>
+  <li><a href="#november" id="toc-november" class="nav-link" data-scroll-target="#november">11. November</a></li>
+  <li><a href="#december" id="toc-december" class="nav-link" data-scroll-target="#december">12. December</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="data-preparation" class="level1">
+<h1>Data Preparation</h1>
+<p>Heat Index : What Temperature feels like to the human body when relative humidity is combined with the air Temperature.</p>
+<p>Values:</p>
+<p>80F - 90F : Caution, 90F - 103F : Extreme Caution, 103F - 124F : Danger, 125F or above : Extreme Danger.</p>
+<p><a href="https://lulus-ak.github.io/myblog/posts/southcal_weather_2010_2020/#create-combine-csv">Data Source</a></p>
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rpy2.robjects <span class="im">as</span> robjects</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext rpy2.ipython</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.pyplot <span class="im">import</span> figure</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(tidyverse)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(DataExplorer)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(readxl)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(weathermetrics)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R options(warn<span class="op">=-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>R[write to console]: Loading required package: tidyverse
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+✔ tibble  3.1.8     ✔ dplyr   1.0.9
+✔ tidyr   1.2.0     ✔ stringr 1.4.0
+✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>R[write to console]: Loading required package: DataExplorer
+</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>R[write to console]: Loading required package: readxl
+</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>R[write to console]: Loading required package: weathermetrics
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>o{'warn': [0], }</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R df <span class="op">&lt;-</span> read_csv(<span class="st">"clean_df.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>New names:
+• `` -&gt; `...1`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 36162 Columns: 19</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr   (5): Name, Conditions, County, State, Country
+dbl  (13): ...1, Maximum Temperature, Minimum Temperature, Temperature, Prec...
+date  (1): Date time</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>...1</th>
+      <th>Name</th>
+      <th>Date time</th>
+      <th>Maximum Temperature</th>
+      <th>Minimum Temperature</th>
+      <th>Temperature</th>
+      <th>Precipitation</th>
+      <th>Wind Speed</th>
+      <th>Wind Direction</th>
+      <th>Visibility</th>
+      <th>Cloud Cover</th>
+      <th>Relative Humidity</th>
+      <th>Conditions</th>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Day</th>
+      <th>County</th>
+      <th>State</th>
+      <th>Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>5475.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14610.0</td>
+      <td>69.3</td>
+      <td>37.2</td>
+      <td>52.4</td>
+      <td>0.00</td>
+      <td>8.0</td>
+      <td>252.79</td>
+      <td>9.9</td>
+      <td>0.0</td>
+      <td>35.89</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5476.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14611.0</td>
+      <td>73.2</td>
+      <td>39.6</td>
+      <td>55.3</td>
+      <td>0.00</td>
+      <td>5.9</td>
+      <td>210.79</td>
+      <td>9.7</td>
+      <td>0.1</td>
+      <td>32.16</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5477.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14612.0</td>
+      <td>75.0</td>
+      <td>37.8</td>
+      <td>55.9</td>
+      <td>0.00</td>
+      <td>7.9</td>
+      <td>168.78</td>
+      <td>9.9</td>
+      <td>0.0</td>
+      <td>32.29</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5478.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14613.0</td>
+      <td>73.7</td>
+      <td>41.1</td>
+      <td>55.3</td>
+      <td>0.00</td>
+      <td>7.0</td>
+      <td>253.29</td>
+      <td>9.9</td>
+      <td>1.4</td>
+      <td>29.90</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5479.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14614.0</td>
+      <td>73.7</td>
+      <td>39.6</td>
+      <td>54.9</td>
+      <td>0.00</td>
+      <td>8.1</td>
+      <td>272.92</td>
+      <td>9.9</td>
+      <td>0.1</td>
+      <td>31.93</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>5.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>36158</th>
+      <td>19020.0</td>
+      <td>Ventura, CA, United States</td>
+      <td>18623.0</td>
+      <td>67.5</td>
+      <td>49.7</td>
+      <td>54.8</td>
+      <td>0.15</td>
+      <td>17.9</td>
+      <td>147.13</td>
+      <td>9.0</td>
+      <td>30.9</td>
+      <td>76.75</td>
+      <td>Rain, Partially cloudy</td>
+      <td>2020.0</td>
+      <td>12.0</td>
+      <td>27.0</td>
+      <td>Ventura</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>36159</th>
+      <td>19021.0</td>
+      <td>Ventura, CA, United States</td>
+      <td>18624.0</td>
+      <td>52.3</td>
+      <td>46.1</td>
+      <td>49.0</td>
+      <td>0.90</td>
+      <td>12.8</td>
+      <td>102.46</td>
+      <td>8.4</td>
+      <td>81.9</td>
+      <td>85.51</td>
+      <td>Rain, Overcast</td>
+      <td>2020.0</td>
+      <td>12.0</td>
+      <td>28.0</td>
+      <td>Ventura</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>36160</th>
+      <td>19022.0</td>
+      <td>Ventura, CA, United States</td>
+      <td>18625.0</td>
+      <td>59.2</td>
+      <td>40.5</td>
+      <td>49.2</td>
+      <td>0.00</td>
+      <td>8.9</td>
+      <td>160.25</td>
+      <td>9.9</td>
+      <td>3.1</td>
+      <td>76.21</td>
+      <td>Clear</td>
+      <td>2020.0</td>
+      <td>12.0</td>
+      <td>29.0</td>
+      <td>Ventura</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>36161</th>
+      <td>19023.0</td>
+      <td>Ventura, CA, United States</td>
+      <td>18626.0</td>
+      <td>64.9</td>
+      <td>41.6</td>
+      <td>51.4</td>
+      <td>0.00</td>
+      <td>19.3</td>
+      <td>109.92</td>
+      <td>9.9</td>
+      <td>5.9</td>
+      <td>60.11</td>
+      <td>Clear</td>
+      <td>2020.0</td>
+      <td>12.0</td>
+      <td>30.0</td>
+      <td>Ventura</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>36162</th>
+      <td>19024.0</td>
+      <td>Ventura, CA, United States</td>
+      <td>18627.0</td>
+      <td>62.0</td>
+      <td>38.7</td>
+      <td>50.4</td>
+      <td>0.00</td>
+      <td>14.9</td>
+      <td>138.50</td>
+      <td>9.9</td>
+      <td>0.7</td>
+      <td>60.52</td>
+      <td>Clear</td>
+      <td>2020.0</td>
+      <td>12.0</td>
+      <td>31.0</td>
+      <td>Ventura</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+<p>36162 rows × 19 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R df$<span class="st">'Heat Index'</span> <span class="op">&lt;-</span> heat.index(t <span class="op">=</span> df$Temperature, rh <span class="op">=</span> df$<span class="st">'Relative Humidity'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>array([49., 52., 53., ..., 47., 49., 48.])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R head(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>...1</th>
+      <th>Name</th>
+      <th>Date time</th>
+      <th>Maximum Temperature</th>
+      <th>Minimum Temperature</th>
+      <th>Temperature</th>
+      <th>Precipitation</th>
+      <th>Wind Speed</th>
+      <th>Wind Direction</th>
+      <th>Visibility</th>
+      <th>Cloud Cover</th>
+      <th>Relative Humidity</th>
+      <th>Conditions</th>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Day</th>
+      <th>County</th>
+      <th>State</th>
+      <th>Country</th>
+      <th>Heat Index</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>5475.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14610.0</td>
+      <td>69.3</td>
+      <td>37.2</td>
+      <td>52.4</td>
+      <td>0.0</td>
+      <td>8.0</td>
+      <td>252.79</td>
+      <td>9.9</td>
+      <td>0.0</td>
+      <td>35.89</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+      <td>49.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5476.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14611.0</td>
+      <td>73.2</td>
+      <td>39.6</td>
+      <td>55.3</td>
+      <td>0.0</td>
+      <td>5.9</td>
+      <td>210.79</td>
+      <td>9.7</td>
+      <td>0.1</td>
+      <td>32.16</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5477.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14612.0</td>
+      <td>75.0</td>
+      <td>37.8</td>
+      <td>55.9</td>
+      <td>0.0</td>
+      <td>7.9</td>
+      <td>168.78</td>
+      <td>9.9</td>
+      <td>0.0</td>
+      <td>32.29</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+      <td>53.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5478.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14613.0</td>
+      <td>73.7</td>
+      <td>41.1</td>
+      <td>55.3</td>
+      <td>0.0</td>
+      <td>7.0</td>
+      <td>253.29</td>
+      <td>9.9</td>
+      <td>1.4</td>
+      <td>29.90</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>5479.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14614.0</td>
+      <td>73.7</td>
+      <td>39.6</td>
+      <td>54.9</td>
+      <td>0.0</td>
+      <td>8.1</td>
+      <td>272.92</td>
+      <td>9.9</td>
+      <td>0.1</td>
+      <td>31.93</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>5.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>5480.0</td>
+      <td>Imperial, CA, United States</td>
+      <td>14615.0</td>
+      <td>71.7</td>
+      <td>41.1</td>
+      <td>54.3</td>
+      <td>0.0</td>
+      <td>8.1</td>
+      <td>209.17</td>
+      <td>9.9</td>
+      <td>0.9</td>
+      <td>32.16</td>
+      <td>Clear</td>
+      <td>2010.0</td>
+      <td>1.0</td>
+      <td>6.0</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+      <td>51.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R unique(df$<span class="st">'Heat Index'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([ 49.,  52.,  53.,  51.,  55.,  54.,  58.,  60.,  57.,  56.,  59.,
+        50.,  48.,  61.,  62.,  63.,  64.,  67.,  69.,  68.,  65.,  73.,
+        70.,  74.,  76.,  77.,  79.,  72.,  71.,  78.,  80.,  81.,  75.,
+        83.,  84.,  87.,  88.,  85.,  86.,  82.,  89.,  90.,  92.,  95.,
+        97., 100.,  98., 101., 105., 104., 102.,  99.,  93.,  96.,  94.,
+        91., 103.,  66.,  44.,  42.,  46.,  45.,  47.,  43.,  41.,  39.,
+        40.,  38., 108., 110., 106.,  37.,  36., 107., 112., 109.,  16.,
+        35., 114., 111., 113.])</code></pre>
+</div>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R <span class="op">-</span>o df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell" data-execution_count="7">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>heat_index <span class="op">=</span> df[[<span class="st">'Name'</span>,<span class="st">'County'</span>,<span class="st">'Month'</span>,<span class="st">'Heat Index'</span>]]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>heat_index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>County</th>
+      <th>Month</th>
+      <th>Heat Index</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Imperial, CA, United States</td>
+      <td>Imperial</td>
+      <td>1.0</td>
+      <td>49.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Imperial, CA, United States</td>
+      <td>Imperial</td>
+      <td>1.0</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Imperial, CA, United States</td>
+      <td>Imperial</td>
+      <td>1.0</td>
+      <td>53.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Imperial, CA, United States</td>
+      <td>Imperial</td>
+      <td>1.0</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Imperial, CA, United States</td>
+      <td>Imperial</td>
+      <td>1.0</td>
+      <td>52.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>36158</th>
+      <td>Ventura, CA, United States</td>
+      <td>Ventura</td>
+      <td>12.0</td>
+      <td>54.0</td>
+    </tr>
+    <tr>
+      <th>36159</th>
+      <td>Ventura, CA, United States</td>
+      <td>Ventura</td>
+      <td>12.0</td>
+      <td>48.0</td>
+    </tr>
+    <tr>
+      <th>36160</th>
+      <td>Ventura, CA, United States</td>
+      <td>Ventura</td>
+      <td>12.0</td>
+      <td>47.0</td>
+    </tr>
+    <tr>
+      <th>36161</th>
+      <td>Ventura, CA, United States</td>
+      <td>Ventura</td>
+      <td>12.0</td>
+      <td>49.0</td>
+    </tr>
+    <tr>
+      <th>36162</th>
+      <td>Ventura, CA, United States</td>
+      <td>Ventura</td>
+      <td>12.0</td>
+      <td>48.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>36162 rows × 4 columns</p>
+</div>
+</div>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mitosheet <span class="im">import</span> <span class="op">*;</span> register_analysis(<span class="st">"id-dloiqmjiwo"</span>)<span class="op">;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pivoted into df</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>tmp_df <span class="op">=</span> df[[<span class="st">'Heat Index'</span>, <span class="st">'County'</span>, <span class="st">'Month'</span>,<span class="st">'Name'</span>]]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>pivot_table <span class="op">=</span> tmp_df.pivot_table(</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'County'</span>],</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'Month'</span>],</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span>[<span class="st">'Heat Index'</span>],</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span>{<span class="st">'Heat Index'</span>: [<span class="st">'median'</span>, <span class="st">'mean'</span>]}</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>pivot_table.set_axis([flatten_column_header(col) <span class="cf">for</span> col <span class="kw">in</span> pivot_table.keys()], axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>df_pivot <span class="op">=</span> pivot_table.reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell" data-execution_count="9">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_pivot.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 9 entries, 0 to 8
+Data columns (total 25 columns):
+ #   Column                  Non-Null Count  Dtype  
+---  ------                  --------------  -----  
+ 0   County                  9 non-null      object 
+ 1   Heat Index mean 1.0     9 non-null      float64
+ 2   Heat Index mean 2.0     9 non-null      float64
+ 3   Heat Index mean 3.0     9 non-null      float64
+ 4   Heat Index mean 4.0     9 non-null      float64
+ 5   Heat Index mean 5.0     9 non-null      float64
+ 6   Heat Index mean 6.0     9 non-null      float64
+ 7   Heat Index mean 7.0     9 non-null      float64
+ 8   Heat Index mean 8.0     9 non-null      float64
+ 9   Heat Index mean 9.0     9 non-null      float64
+ 10  Heat Index mean 10.0    9 non-null      float64
+ 11  Heat Index mean 11.0    9 non-null      float64
+ 12  Heat Index mean 12.0    9 non-null      float64
+ 13  Heat Index median 1.0   9 non-null      float64
+ 14  Heat Index median 2.0   9 non-null      float64
+ 15  Heat Index median 3.0   9 non-null      float64
+ 16  Heat Index median 4.0   9 non-null      float64
+ 17  Heat Index median 5.0   9 non-null      float64
+ 18  Heat Index median 6.0   9 non-null      float64
+ 19  Heat Index median 7.0   9 non-null      float64
+ 20  Heat Index median 8.0   9 non-null      float64
+ 21  Heat Index median 9.0   9 non-null      float64
+ 22  Heat Index median 10.0  9 non-null      float64
+ 23  Heat Index median 11.0  9 non-null      float64
+ 24  Heat Index median 12.0  9 non-null      float64
+dtypes: float64(24), object(1)
+memory usage: 1.9+ KB</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="st">"Southern-California.geojson"</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">file</span> <span class="op">=</span> <span class="bu">open</span>(filename)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>geo <span class="op">=</span> gpd.read_file(<span class="bu">file</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Declare a list that is to be converted into a column</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>county <span class="op">=</span> [<span class="st">'San Luis Obispo, CA, United States'</span>, <span class="st">'Riverside, CA, United States'</span>, </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>          <span class="st">'Imperial, CA, United States'</span>,<span class="st">'Santa Barbara, CA, United States'</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>          <span class="st">'Ventura, CA, United States'</span>,<span class="st">'Los Angeles, CA, United States'</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>          <span class="st">'San Diego, CA, United States'</span>,<span class="st">'Orange, CA, United States'</span>,<span class="st">'San Bernardino, CA, United States'</span>]</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Using 'Address' as the column name</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co"># and equating it to the list</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>geo[<span class="st">'Name'</span>] <span class="op">=</span> county</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>geo.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="10">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>felt-clipSource</th>
+      <th>felt-color</th>
+      <th>felt-showArea</th>
+      <th>felt-type</th>
+      <th>geometry</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'geometry': {'coordinates': [[[35.79776624517...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-121.43875 35.79777, -121.39...</td>
+      <td>San Luis Obispo, CA, United States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'geometry': {'coordinates': [[[33.88865750124...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-117.67731 33.88866, -117.67...</td>
+      <td>Riverside, CA, United States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>{'geometry': {'coordinates': [[[32.61855682784...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-116.10764 32.61856, -114.72...</td>
+      <td>Imperial, CA, United States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{'geometry': {'coordinates': [[[34.89606881622...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-120.73425 34.89607, -120.71...</td>
+      <td>Santa Barbara, CA, United States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{'geometry': {'coordinates': [[[34.32756015705...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-119.50104 34.32756, -119.46...</td>
+      <td>Ventura, CA, United States</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely <span class="im">import</span> wkt</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>geo[<span class="st">'geometry'</span>] <span class="op">=</span> geo.geometry.<span class="bu">apply</span>(<span class="kw">lambda</span> x: wkt.dumps(x))</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>geo.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="11">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>felt-clipSource</th>
+      <th>felt-color</th>
+      <th>felt-showArea</th>
+      <th>felt-type</th>
+      <th>geometry</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'geometry': {'coordinates': [[[35.79776624517...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-121.4387512207031392 35.797...</td>
+      <td>San Luis Obispo, CA, United States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'geometry': {'coordinates': [[[33.88865750124...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-117.6773071289062642 33.888...</td>
+      <td>Riverside, CA, United States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>{'geometry': {'coordinates': [[[32.61855682784...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-116.1076354980468892 32.618...</td>
+      <td>Imperial, CA, United States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{'geometry': {'coordinates': [[[34.89606881622...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-120.7342529296875142 34.896...</td>
+      <td>Santa Barbara, CA, United States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{'geometry': {'coordinates': [[[34.32756015705...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>MULTILINESTRING ((-119.5010375976562642 34.327...</td>
+      <td>Ventura, CA, United States</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># By using str.replace()</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>geo[<span class="st">'geometry'</span>] <span class="op">=</span> geo[<span class="st">'geometry'</span>].<span class="bu">str</span>.replace(<span class="st">'MULTILINESTRING'</span>,<span class="st">'POLYGON'</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>geo[<span class="st">'geometry'</span>] <span class="op">=</span> gpd.GeoSeries.from_wkt(geo[<span class="st">'geometry'</span>])</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>geo.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>felt-clipSource</th>
+      <th>felt-color</th>
+      <th>felt-showArea</th>
+      <th>felt-type</th>
+      <th>geometry</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'geometry': {'coordinates': [[[35.79776624517...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-121.43875 35.79777, -121.39481 35.7...</td>
+      <td>San Luis Obispo, CA, United States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'geometry': {'coordinates': [[[33.88865750124...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-117.67731 33.88866, -117.67456 33.8...</td>
+      <td>Riverside, CA, United States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>{'geometry': {'coordinates': [[[32.61855682784...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-116.10764 32.61856, -114.72061 32.7...</td>
+      <td>Imperial, CA, United States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{'geometry': {'coordinates': [[[34.89606881622...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-120.73425 34.89607, -120.71365 34.8...</td>
+      <td>Santa Barbara, CA, United States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{'geometry': {'coordinates': [[[34.32756015705...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-119.50104 34.32756, -119.46808 34.2...</td>
+      <td>Ventura, CA, United States</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>geo[[<span class="st">"County"</span>,<span class="st">"State"</span>,<span class="st">"Country"</span>]] <span class="op">=</span> geo[<span class="st">"Name"</span>].<span class="bu">str</span>.split(pat<span class="op">=</span><span class="st">','</span>,expand<span class="op">=</span><span class="va">True</span>, n <span class="op">=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell" data-execution_count="14">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>geo.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="14">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>felt-clipSource</th>
+      <th>felt-color</th>
+      <th>felt-showArea</th>
+      <th>felt-type</th>
+      <th>geometry</th>
+      <th>Name</th>
+      <th>County</th>
+      <th>State</th>
+      <th>Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>{'geometry': {'coordinates': [[[35.79776624517...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-121.43875 35.79777, -121.39481 35.7...</td>
+      <td>San Luis Obispo, CA, United States</td>
+      <td>San Luis Obispo</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>{'geometry': {'coordinates': [[[33.88865750124...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-117.67731 33.88866, -117.67456 33.8...</td>
+      <td>Riverside, CA, United States</td>
+      <td>Riverside</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>{'geometry': {'coordinates': [[[32.61855682784...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-116.10764 32.61856, -114.72061 32.7...</td>
+      <td>Imperial, CA, United States</td>
+      <td>Imperial</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>{'geometry': {'coordinates': [[[34.89606881622...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-120.73425 34.89607, -120.71365 34.8...</td>
+      <td>Santa Barbara, CA, United States</td>
+      <td>Santa Barbara</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>{'geometry': {'coordinates': [[[34.32756015705...</td>
+      <td>RED</td>
+      <td>False</td>
+      <td>Polygon</td>
+      <td>POLYGON ((-119.50104 34.32756, -119.46808 34.2...</td>
+      <td>Ventura, CA, United States</td>
+      <td>Ventura</td>
+      <td>CA</td>
+      <td>United States</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df_map <span class="op">=</span>geo.set_index(<span class="st">'County'</span>).join(df_pivot.set_index(<span class="st">'County'</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df_map <span class="op">=</span> df_map.reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell" data-execution_count="16">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df_map.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'geopandas.geodataframe.GeoDataFrame'&gt;
+RangeIndex: 9 entries, 0 to 8
+Data columns (total 33 columns):
+ #   Column                  Non-Null Count  Dtype   
+---  ------                  --------------  -----   
+ 0   County                  9 non-null      object  
+ 1   felt-clipSource         9 non-null      object  
+ 2   felt-color              9 non-null      object  
+ 3   felt-showArea           9 non-null      bool    
+ 4   felt-type               9 non-null      object  
+ 5   geometry                9 non-null      geometry
+ 6   Name                    9 non-null      object  
+ 7   State                   9 non-null      object  
+ 8   Country                 9 non-null      object  
+ 9   Heat Index mean 1.0     9 non-null      float64 
+ 10  Heat Index mean 2.0     9 non-null      float64 
+ 11  Heat Index mean 3.0     9 non-null      float64 
+ 12  Heat Index mean 4.0     9 non-null      float64 
+ 13  Heat Index mean 5.0     9 non-null      float64 
+ 14  Heat Index mean 6.0     9 non-null      float64 
+ 15  Heat Index mean 7.0     9 non-null      float64 
+ 16  Heat Index mean 8.0     9 non-null      float64 
+ 17  Heat Index mean 9.0     9 non-null      float64 
+ 18  Heat Index mean 10.0    9 non-null      float64 
+ 19  Heat Index mean 11.0    9 non-null      float64 
+ 20  Heat Index mean 12.0    9 non-null      float64 
+ 21  Heat Index median 1.0   9 non-null      float64 
+ 22  Heat Index median 2.0   9 non-null      float64 
+ 23  Heat Index median 3.0   9 non-null      float64 
+ 24  Heat Index median 4.0   9 non-null      float64 
+ 25  Heat Index median 5.0   9 non-null      float64 
+ 26  Heat Index median 6.0   9 non-null      float64 
+ 27  Heat Index median 7.0   9 non-null      float64 
+ 28  Heat Index median 8.0   9 non-null      float64 
+ 29  Heat Index median 9.0   9 non-null      float64 
+ 30  Heat Index median 10.0  9 non-null      float64 
+ 31  Heat Index median 11.0  9 non-null      float64 
+ 32  Heat Index median 12.0  9 non-null      float64 
+dtypes: bool(1), float64(24), geometry(1), object(7)
+memory usage: 2.4+ KB</code></pre>
+</div>
+</div>
+</section>
+<section id="heat-index-by-month" class="level1">
+<h1>Heat Index by Month</h1>
+<section id="january" class="level3">
+<h3 class="anchored" data-anchor-id="january">1. January</h3>
+<div class="cell" data-execution_count="17">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>index_jan <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 1.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>index_jan[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_jan[<span class="st">'Heat Index median 1.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>index_jan.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 1.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>index_jan.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"January Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="february" class="level3">
+<h3 class="anchored" data-anchor-id="february">2. February</h3>
+<div class="cell" data-execution_count="18">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>index_feb <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 2.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>index_feb[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_feb[<span class="st">'Heat Index median 2.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>index_feb.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 2.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>index_feb.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"February Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="march" class="level3">
+<h3 class="anchored" data-anchor-id="march">3. March</h3>
+<div class="cell" data-execution_count="19">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>index_mar <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 3.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>index_mar[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_mar[<span class="st">'Heat Index median 3.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>index_mar.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 3.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>index_mar.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"March Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="april" class="level3">
+<h3 class="anchored" data-anchor-id="april">4. April</h3>
+<div class="cell" data-execution_count="20">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>index_apr <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 4.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>index_apr[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_apr[<span class="st">'Heat Index median 4.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>index_apr.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 4.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>index_apr.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"April Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="may" class="level3">
+<h3 class="anchored" data-anchor-id="may">5. May</h3>
+<div class="cell" data-execution_count="21">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>index_may <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 5.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>index_may[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_may[<span class="st">'Heat Index median 5.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>index_may.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 5.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>index_may.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"May Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="june" class="level3">
+<h3 class="anchored" data-anchor-id="june">6. June</h3>
+<div class="cell" data-execution_count="22">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>index_june <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 6.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>index_june[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_june[<span class="st">'Heat Index median 6.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>index_june.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 6.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>index_june.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"June Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="july" class="level3">
+<h3 class="anchored" data-anchor-id="july">7. July</h3>
+<div class="cell" data-execution_count="23">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>index_july <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 7.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>index_july[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_july[<span class="st">'Heat Index median 7.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>index_july.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 7.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>index_july.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"July Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="august" class="level3">
+<h3 class="anchored" data-anchor-id="august">8. August</h3>
+<div class="cell" data-execution_count="24">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>index_aug <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 8.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>index_aug[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_aug[<span class="st">'Heat Index median 8.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>index_aug.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 8.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>index_aug.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"August Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-25-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="september" class="level3">
+<h3 class="anchored" data-anchor-id="september">9. September</h3>
+<div class="cell" data-execution_count="25">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>index_sep <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 9.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>index_sep[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_sep[<span class="st">'Heat Index median 9.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>index_sep.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 9.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>index_sep.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"September Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="october" class="level3">
+<h3 class="anchored" data-anchor-id="october">10. October</h3>
+<div class="cell" data-execution_count="26">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>index_oct <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 10.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>index_oct[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_oct[<span class="st">'Heat Index median 10.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>index_oct.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 10.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>index_oct.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"October Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="november" class="level3">
+<h3 class="anchored" data-anchor-id="november">11. November</h3>
+<div class="cell" data-execution_count="27">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>index_nov <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 11.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>index_nov[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_nov[<span class="st">'Heat Index median 11.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>index_nov.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 11.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>index_nov.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"November Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-28-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="december" class="level3">
+<h3 class="anchored" data-anchor-id="december">12. December</h3>
+<div class="cell" data-execution_count="28">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>index_dec <span class="op">=</span> df_map[[<span class="st">'County'</span>,<span class="st">'Heat Index median 12.0'</span>,<span class="st">'geometry'</span>]]</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>bins <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">79.999</span>, <span class="fl">89.999</span>, <span class="fl">102.999</span>, <span class="fl">124.999</span>]</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>group_names <span class="op">=</span> [<span class="st">'Normal'</span>,<span class="st">'Caution'</span>,<span class="st">'Danger'</span>,<span class="st">'Extreme Danger'</span>]</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>index_dec[<span class="st">'Status'</span>] <span class="op">=</span> pd.cut(index_dec[<span class="st">'Heat Index median 12.0'</span>], bins, labels<span class="op">=</span>group_names)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>index_dec.plot(ax<span class="op">=</span>ax, column<span class="op">=</span><span class="st">'Heat Index median 12.0'</span>,cmap<span class="op">=</span><span class="st">'YlOrRd'</span>,legend<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>index_dec.<span class="bu">apply</span>(<span class="kw">lambda</span> x: ax.annotate(text<span class="op">=</span>x[<span class="st">'Status'</span>], xy<span class="op">=</span>x.geometry.centroid.coords[<span class="dv">0</span>], ha<span class="op">=</span><span class="st">'center'</span>), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"December Heat Index"</span>, fontsize<span class="op">=</span><span class="dv">16</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="heat_index_files/figure-html/cell-29-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

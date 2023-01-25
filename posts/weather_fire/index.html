@@ -17,69 +17,6 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -203,8 +140,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link active" data-scroll-target="#data-preparation">Data Preparation</a></li>
-  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link active" data-scroll-target="#analysis">Analysis</a>
   <ul class="collapse">
   <li><a href="#univariate-analysis" id="toc-univariate-analysis" class="nav-link" data-scroll-target="#univariate-analysis">1. Univariate Analysis</a>
   <ul class="collapse">
@@ -233,386 +169,190 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="data-preparation" class="level1">
-<h1>Data Preparation</h1>
 <p>We are using Weather Dataset on 2010 -2020 that are already being cleaned on previous process.See for <a href="https://lulus-ak.github.io/myblog/posts/southcal_weather_2010_2020/#create-combine-csv">Reference</a>. And then we catogorized the data into 3 level of Risk: High,Medium and Low for comparison purpose, see for <a href="https://lulus-ak.github.io/myblog/posts/southcal_fireincident_2013_2020/#wildfire-in-southern-california-by-month">Reference</a>. We do comparison between Low and High level of risk for the clarity of the differentiation.</p>
-<div class="cell" data-execution_count="1">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rpy2.robjects <span class="im">as</span> robjects</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext rpy2.ipython</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.pyplot <span class="im">import</span> figure</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tabulate <span class="im">import</span> tabulate</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.style.use('ggplot')</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(tidyverse)</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(DataExplorer)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(readxl)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(esquisse)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R options(warn<span class="op">=-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>/home/lulus/.pyenv/versions/analysis/lib/python3.7/site-packages/geopandas/_compat.py:115: UserWarning:
-
-The Shapely GEOS version (3.10.2-CAPI-1.16.0) is incompatible with the GEOS version PyGEOS was compiled with (3.10.3-CAPI-1.16.1). Conversions between both will be slow.
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: tidyverse
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-✔ tibble  3.1.8     ✔ dplyr   1.0.9
-✔ tidyr   1.2.0     ✔ stringr 1.4.0
-✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: DataExplorer
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: readxl
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: esquisse
-</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="1">
-<pre><code>o{'warn': [0], }</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="2">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R df <span class="op">&lt;-</span> read_csv(<span class="st">"clean_df.csv"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R plot_missing(df)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R options(warn<span class="op">=-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>New names:
-• `` -&gt; `...1`</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 36162 Columns: 19</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr   (5): Name, Conditions, County, State, Country
-dbl  (13): ...1, Maximum Temperature, Minimum Temperature, Temperature, Prec...
-date  (1): Date time</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-3-output-5.png" class="img-fluid"></p>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>o{'warn': [-1], }</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="3">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"clean_df.csv"</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
-RangeIndex: 36162 entries, 0 to 36161
-Data columns (total 19 columns):
- #   Column               Non-Null Count  Dtype  
----  ------               --------------  -----  
- 0   Unnamed: 0           36162 non-null  int64  
- 1   Name                 36162 non-null  object 
- 2   Date time            36162 non-null  object 
- 3   Maximum Temperature  36162 non-null  float64
- 4   Minimum Temperature  36162 non-null  float64
- 5   Temperature          36162 non-null  float64
- 6   Precipitation        36162 non-null  float64
- 7   Wind Speed           36162 non-null  float64
- 8   Wind Direction       36162 non-null  float64
- 9   Visibility           36162 non-null  float64
- 10  Cloud Cover          36162 non-null  float64
- 11  Relative Humidity    36162 non-null  float64
- 12  Conditions           36162 non-null  object 
- 13  Year                 36162 non-null  int64  
- 14  Month                36162 non-null  float64
- 15  Day                  36162 non-null  float64
- 16  County               36162 non-null  object 
- 17  State                36162 non-null  object 
- 18  Country              36162 non-null  object 
-dtypes: float64(11), int64(2), object(6)
-memory usage: 5.2+ MB</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="4">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'County'</span>].unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>array(['Imperial', 'Los Angeles', 'Orange', 'Riverside', 'San Bernardino',
-       'San Diego', 'San Luis Obispo', 'Santa Barbara', 'Ventura'],
-      dtype=object)</code></pre>
-</div>
-</div>
 <p>We are removing Imperial County from the parameter because Imperial County do not have wildfire incident on the incident data, see for <a href="https://lulus-ak.github.io/myblog/posts/southcal_fireincident_2013_2020/#wildfire-incident-in-southern-california">Reference</a></p>
-<div class="cell" data-execution_count="5">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df.County <span class="op">!=</span> <span class="st">'Imperial'</span>]</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'County'</span>].unique()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>array(['Los Angeles', 'Orange', 'Riverside', 'San Bernardino',
-       'San Diego', 'San Luis Obispo', 'Santa Barbara', 'Ventura'],
-      dtype=object)</code></pre>
-</div>
-</div>
-</section>
 <section id="analysis" class="level1">
 <h1>Analysis</h1>
 <section id="univariate-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="univariate-analysis">1. Univariate Analysis</h2>
 <p>We are doing comparison between 2 same variables from different level of risks : Low and High</p>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Changed Month to dtype int</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Month'</span>] <span class="op">=</span> df[<span class="st">'Month'</span>].fillna(<span class="dv">0</span>).astype(<span class="st">'int'</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtered Month</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>df_high <span class="op">=</span> df[(df[<span class="st">'Month'</span>] <span class="op">&gt;</span> <span class="dv">4</span>) <span class="op">&amp;</span> (df[<span class="st">'Month'</span>] <span class="op">&lt;</span> <span class="dv">11</span>)]</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Changed Month to dtype int</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Month'</span>] <span class="op">=</span> df[<span class="st">'Month'</span>].fillna(<span class="dv">0</span>).astype(<span class="st">'int'</span>)</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtered Month</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>df_low <span class="op">=</span> df[(df[<span class="st">'Month'</span>] <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">&amp;</span> (df[<span class="st">'Month'</span>] <span class="op">&lt;</span> <span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <section id="temperature" class="level3">
 <h3 class="anchored" data-anchor-id="temperature">1.1. Temperature</h3>
-<div class="cell" data-execution_count="7">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high.Temperature, shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low.Temperature, shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'High Risk'</span>,<span class="st">'Low Risk'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f9104513f50&gt;</code></pre>
+<div class="cell quarto-layout-panel" data-execution_count="7">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid" width="509"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="maximum-temperature" class="level3">
 <h3 class="anchored" data-anchor-id="maximum-temperature">1.2. Maximum Temperature</h3>
-<div class="cell" data-execution_count="8">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high[<span class="st">'Maximum Temperature'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low[<span class="st">'Maximum Temperature'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'High Risk'</span>,<span class="st">'Low Risk'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f90b7e8a590&gt;</code></pre>
+<div class="cell quarto-layout-panel" data-execution_count="8">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-9-output-1.png" class="img-fluid" width="509"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="minimum-temperature" class="level3">
 <h3 class="anchored" data-anchor-id="minimum-temperature">1.3. Minimum Temperature</h3>
-<div class="cell" data-execution_count="9">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high[<span class="st">'Minimum Temperature'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low[<span class="st">'Minimum Temperature'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'High Risk'</span>,<span class="st">'Low Risk'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f90b7e76310&gt;</code></pre>
+<div class="cell quarto-layout-panel" data-execution_count="9">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid" width="509"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="wind-direction" class="level3">
 <h3 class="anchored" data-anchor-id="wind-direction">1.4. Wind Direction</h3>
-<div class="cell" data-execution_count="10">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high[<span class="st">'Wind Direction'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low[<span class="st">'Wind Direction'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'High Risk'</span>,<span class="st">'Low Risk'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f90b7b30290&gt;</code></pre>
+<div class="cell quarto-layout-panel" data-execution_count="10">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-11-output-1.png" class="img-fluid" width="514"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="wind-speed" class="level3">
 <h3 class="anchored" data-anchor-id="wind-speed">1.5. Wind Speed</h3>
-<div class="cell" data-execution_count="11">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high[<span class="st">'Wind Speed'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low[<span class="st">'Wind Speed'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'High Risk'</span>,<span class="st">'Low Risk'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f90b7a74c50&gt;</code></pre>
+<div class="cell quarto-layout-panel" data-execution_count="11">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-12-output-1.png" class="img-fluid" width="509"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="relative-humidity" class="level3">
 <h3 class="anchored" data-anchor-id="relative-humidity">1.6. Relative Humidity</h3>
-<div class="cell" data-execution_count="12">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high[<span class="st">'Relative Humidity'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low[<span class="st">'Relative Humidity'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'High Risk'</span>,<span class="st">'Low Risk'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f90b770d8d0&gt;</code></pre>
+<div class="cell quarto-layout-panel" data-execution_count="12">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid" width="514"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="precipitation" class="level3">
 <h3 class="anchored" data-anchor-id="precipitation">1.7. Precipitation</h3>
-<div class="cell" data-execution_count="13">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high[<span class="st">'Precipitation'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low[<span class="st">'Precipitation'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'High Risk'</span>,<span class="st">'Low Risk'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f90b76b04d0&gt;</code></pre>
+<div class="cell quarto-layout-panel" data-execution_count="13">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-14-output-2.png" class="img-fluid"></p>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-14-output-1.png" class="img-fluid" width="501"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="cloud-cover" class="level3">
 <h3 class="anchored" data-anchor-id="cloud-cover">1.8. Cloud Cover</h3>
-<div class="cell" data-execution_count="14">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high[<span class="st">'Cloud Cover'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low[<span class="st">'Cloud Cover'</span>],shade<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">'High Risk'</span>,<span class="st">'Low Risk'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="14">
-<pre><code>&lt;matplotlib.legend.Legend at 0x7f90b73ddd10&gt;</code></pre>
+<div class="cell quarto-layout-panel" data-execution_count="14">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
 </div>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-15-output-1.png" class="img-fluid" width="518"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 </section>
 <section id="bivariate-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="bivariate-analysis">2. Bivariate Analysis</h2>
-<p>As we know that Temperature had a big impact for wildfire to occured, we are trying to see the correlation between Temperature and other variables on the different level of risks.</p>
+<p>As we know that Temperature had a big impact for wildfire to occured, we are trying to see the correlation between Temperature and other variables from a different level of risks.</p>
 <section id="temperature-vs-wind-speed" class="level3">
 <h3 class="anchored" data-anchor-id="temperature-vs-wind-speed">2.3. Temperature vs Wind Speed</h3>
-<div class="cell" data-execution_count="15">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high.Temperature,df_high[<span class="st">'Wind Speed'</span>], shade<span class="op">=</span><span class="va">True</span>, n_levels<span class="op">=</span><span class="dv">20</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low.Temperature,df_low[<span class="st">'Wind Speed'</span>], shade<span class="op">=</span><span class="va">True</span>, n_levels<span class="op">=</span><span class="dv">20</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+<div class="cell quarto-layout-panel" data-execution_count="15">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-16-output-1.png" class="img-fluid" width="507"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="temperature-vs-wind-direction" class="level3">
 <h3 class="anchored" data-anchor-id="temperature-vs-wind-direction">2.3. Temperature vs Wind Direction</h3>
-<div class="cell" data-execution_count="16">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high.Temperature,df_high[<span class="st">'Wind Direction'</span>], shade<span class="op">=</span><span class="va">True</span>, n_levels<span class="op">=</span><span class="dv">20</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low.Temperature,df_low[<span class="st">'Wind Direction'</span>], shade<span class="op">=</span><span class="va">True</span>, n_levels<span class="op">=</span><span class="dv">20</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
+<div class="cell quarto-layout-panel" data-execution_count="16">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-17-output-1.png" class="img-fluid" width="512"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 </section>
 <section id="temperature-vs-relative-humidity" class="level3">
 <h3 class="anchored" data-anchor-id="temperature-vs-relative-humidity">2.4. Temperature vs Relative Humidity</h3>
-<div class="cell" data-execution_count="17">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_high.Temperature,df_high[<span class="st">'Relative Humidity'</span>], shade<span class="op">=</span><span class="va">True</span>, n_levels<span class="op">=</span><span class="dv">20</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>sns.kdeplot(df_low.Temperature,df_low[<span class="st">'Relative Humidity'</span>], shade<span class="op">=</span><span class="va">True</span>, n_levels<span class="op">=</span><span class="dv">20</span>, ax<span class="op">=</span>ax)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+<div class="cell quarto-layout-panel" data-execution_count="17">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+<div class="cell-output cell-output-display quarto-layout-cell" style="flex-basis: 80.0%;justify-content: center;">
+<p><img src="index_files/figure-html/cell-18-output-1.png" class="img-fluid" width="512"></p>
+</div>
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 10.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
 </div>
 </div>
 

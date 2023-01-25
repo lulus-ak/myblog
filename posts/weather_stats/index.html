@@ -166,9 +166,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div class="quarto-title column-body">
       <h1 class="title">Statistical Analysis of Southern California Weather Variables</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">california</div>
-                <div class="quarto-category">analysis</div>
-                <div class="quarto-category">wildfire</div>
+                <div class="quarto-category">project</div>
+                <div class="quarto-category">calfire</div>
               </div>
                   </div>
   </div>
@@ -207,8 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link active" data-scroll-target="#data-preparation">Data Preparation</a></li>
-  <li><a href="#assumption-hypothesis" id="toc-assumption-hypothesis" class="nav-link" data-scroll-target="#assumption-hypothesis">Assumption &amp; Hypothesis</a></li>
+  <li><a href="#assumption-hypothesis" id="toc-assumption-hypothesis" class="nav-link active" data-scroll-target="#assumption-hypothesis">Assumption &amp; Hypothesis</a></li>
   <li><a href="#data-summary" id="toc-data-summary" class="nav-link" data-scroll-target="#data-summary">Data Summary</a></li>
   <li><a href="#welch-anova-test" id="toc-welch-anova-test" class="nav-link" data-scroll-target="#welch-anova-test">Welch ANOVA Test</a>
   <ul class="collapse">
@@ -227,266 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<section id="data-preparation" class="level1">
-<h1>Data Preparation</h1>
 <p><a href="https://lulus-ak.github.io/myblog/posts/southcal_weather_2010_2020/#create-combine-csv">Data Source</a></p>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Import Library</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rpy2.robjects <span class="im">as</span> robjects</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext rpy2.ipython</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.pyplot <span class="im">import</span> figure</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'ggplot'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell" data-execution_count="3">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(report)      <span class="co"># to report results</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(sjPlot)      <span class="co"># visualizes model results</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(flextable)   <span class="co"># for beautiful tables</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(tidyverse)   <span class="co"># provides a lot of useful stuff !!! </span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(ggstatsplot) <span class="co"># to visualize test results</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R require(ggcorrplot) <span class="co"># to visualize test results</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R options(warn<span class="op">=-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: report
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: sjPlot
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: flextable
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: tidyverse
-</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>✔ ggplot2 3.3.6     ✔ purrr   0.3.4
-✔ tibble  3.1.8     ✔ dplyr   1.0.9
-✔ tidyr   1.2.0     ✔ stringr 1.4.0
-✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ purrr::compose() masks flextable::compose()
-✖ dplyr::filter()  masks stats::filter()
-✖ dplyr::lag()     masks stats::lag()</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: ggstatsplot
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: You can cite this package as:
-     Patil, I. (2021). Visualizations with statistical details: The 'ggstatsplot' approach.
-     Journal of Open Source Software, 6(61), 3167, doi:10.21105/joss.03167
-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>R[write to console]: Loading required package: ggcorrplot
-</code></pre>
-</div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>o{'warn': [0], }</code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="4">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"clean_df.csv"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display" data-execution_count="4">
-
-<div>
-
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Unnamed: 0</th>
-      <th>Name</th>
-      <th>Date time</th>
-      <th>Maximum Temperature</th>
-      <th>Minimum Temperature</th>
-      <th>Temperature</th>
-      <th>Precipitation</th>
-      <th>Wind Speed</th>
-      <th>Wind Direction</th>
-      <th>Visibility</th>
-      <th>Cloud Cover</th>
-      <th>Relative Humidity</th>
-      <th>Conditions</th>
-      <th>Year</th>
-      <th>Month</th>
-      <th>Day</th>
-      <th>County</th>
-      <th>State</th>
-      <th>Country</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5475</td>
-      <td>Imperial, CA, United States</td>
-      <td>2010-01-01</td>
-      <td>69.3</td>
-      <td>37.2</td>
-      <td>52.4</td>
-      <td>0.0</td>
-      <td>8.0</td>
-      <td>252.79</td>
-      <td>9.9</td>
-      <td>0.0</td>
-      <td>35.89</td>
-      <td>Clear</td>
-      <td>2010</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>Imperial</td>
-      <td>CA</td>
-      <td>United States</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5476</td>
-      <td>Imperial, CA, United States</td>
-      <td>2010-01-02</td>
-      <td>73.2</td>
-      <td>39.6</td>
-      <td>55.3</td>
-      <td>0.0</td>
-      <td>5.9</td>
-      <td>210.79</td>
-      <td>9.7</td>
-      <td>0.1</td>
-      <td>32.16</td>
-      <td>Clear</td>
-      <td>2010</td>
-      <td>1.0</td>
-      <td>2.0</td>
-      <td>Imperial</td>
-      <td>CA</td>
-      <td>United States</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5477</td>
-      <td>Imperial, CA, United States</td>
-      <td>2010-01-03</td>
-      <td>75.0</td>
-      <td>37.8</td>
-      <td>55.9</td>
-      <td>0.0</td>
-      <td>7.9</td>
-      <td>168.78</td>
-      <td>9.9</td>
-      <td>0.0</td>
-      <td>32.29</td>
-      <td>Clear</td>
-      <td>2010</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>Imperial</td>
-      <td>CA</td>
-      <td>United States</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>5478</td>
-      <td>Imperial, CA, United States</td>
-      <td>2010-01-04</td>
-      <td>73.7</td>
-      <td>41.1</td>
-      <td>55.3</td>
-      <td>0.0</td>
-      <td>7.0</td>
-      <td>253.29</td>
-      <td>9.9</td>
-      <td>1.4</td>
-      <td>29.90</td>
-      <td>Clear</td>
-      <td>2010</td>
-      <td>1.0</td>
-      <td>4.0</td>
-      <td>Imperial</td>
-      <td>CA</td>
-      <td>United States</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5479</td>
-      <td>Imperial, CA, United States</td>
-      <td>2010-01-05</td>
-      <td>73.7</td>
-      <td>39.6</td>
-      <td>54.9</td>
-      <td>0.0</td>
-      <td>8.1</td>
-      <td>272.92</td>
-      <td>9.9</td>
-      <td>0.1</td>
-      <td>31.93</td>
-      <td>Clear</td>
-      <td>2010</td>
-      <td>1.0</td>
-      <td>5.0</td>
-      <td>Imperial</td>
-      <td>CA</td>
-      <td>United States</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop([<span class="st">'Unnamed: 0'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>subset <span class="op">=</span> df[[<span class="st">'County'</span>,<span class="st">'Maximum Temperature'</span>,<span class="st">'Minimum Temperature'</span>,<span class="st">'Temperature'</span>,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>              <span class="st">'Precipitation'</span>,<span class="st">'Relative Humidity'</span>,<span class="st">'Cloud Cover'</span>,<span class="st">'Wind Direction'</span>,</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>             <span class="st">'Wind Speed'</span>,<span class="st">'Visibility'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>R <span class="op">-</span>i subset</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell" data-execution_count="8">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span>(subset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code> "data.frame"</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-</section>
 <section id="assumption-hypothesis" class="level1">
 <h1>Assumption &amp; Hypothesis</h1>
 <p><strong>Dependent Variables:</strong></p>
@@ -533,394 +272,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Welch ANOVA Test</h1>
 <section id="geographic-locations-effect-to-level-of-temperature" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-locations-effect-to-level-of-temperature">1. Geographic locations effect to level of Temperature</h2>
-<div class="cell" data-execution_count="9">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Change box plot colors by groups</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>ggplot(subset, aes(x<span class="op">=</span>County, y<span class="op">=</span>Temperature, fill<span class="op">=</span>County, </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                  options(<span class="bu">repr</span>.plot.width<span class="op">=</span><span class="dv">50</span>, <span class="bu">repr</span>.plot.height<span class="op">=</span><span class="dv">10</span>))) <span class="op">+</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  geom_boxplot() <span class="op">+</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    theme(legend.position <span class="op">=</span> <span class="st">"right"</span>, </span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    axis.ticks <span class="op">=</span> element_blank(), </span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">0</span>, colour <span class="op">=</span> <span class="st">"black"</span>),</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    axis.text.y <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="dv">1</span>, colour <span class="op">=</span> <span class="st">"black"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-execution_count="10">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>population_variance <span class="op">&lt;-</span> function(rv) {</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a> mean((rv <span class="op">-</span> mean(rv)) <span class="op">^</span> <span class="dv">2</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>weights <span class="op">&lt;-</span> subset$Temperature</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>population_variance(weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code> 94.57607</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="11">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>oneway.test(Temperature <span class="op">~</span> County,</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> subset,</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  var.equal <span class="op">=</span> FALSE <span class="co"># assuming unequal variances - Welch Anova</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    One-way analysis of means (not assuming equal variances)</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>data:  </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Temperature and County</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>F = 850.85, num df = 8, denom df = 15015, p-value &lt; 2.2e-16</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="12">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>aov(Temperature <span class="op">~</span> County, data <span class="op">=</span> subset) <span class="op">%&gt;%</span> </span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  report()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>The ANOVA (formula: Temperature ~ County) suggests that:
-
-  - The main effect of County is statistically significant and large (F(8, 36153)
-= 1088.27, p &lt; .001; Eta2 = 0.19, 95% CI [0.19, 1.00])
-
-Effect sizes were labelled following Field's (2013) recommendations.</code></pre>
-</div>
-</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(Temperature <span class="sc">~</span> County,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subset,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.equal =</span> <span class="cn">FALSE</span> <span class="co"># assuming unequal variances - Welch Anova</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>One-way analysis of means (not assuming equal variances)</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>data: Temperature and County F = 850.85, num df = 8, denom df = 15015, p-value &lt; 2.2e-16</p>
+</blockquote>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(Temperature <span class="sc">~</span> County, <span class="at">data =</span> subset) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>The ANOVA (formula: Temperature ~ County) suggests that: The main effect of County is statistically significant and large (F(8, 36153) = 1088.27, p &lt; .001; Eta2 = 0.19, 95% CI [0.19, 1.00]) Effect sizes were labelled following Field’s (2013) recommendations.</p>
+</blockquote>
 </section>
 <section id="geographic-locations-effect-to-level-of-relative-humidity" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-locations-effect-to-level-of-relative-humidity">2. Geographic locations effect to level of Relative Humidity</h2>
-<div class="cell" data-execution_count="13">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Change box plot colors by groups</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>fig1 <span class="op">&lt;-</span> ggplot(subset, aes(x<span class="op">=</span>County, y<span class="op">=</span>subset$<span class="st">'Relative Humidity'</span>, fill<span class="op">=</span>County, </span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>                  options(<span class="bu">repr</span>.plot.width<span class="op">=</span><span class="dv">50</span>, <span class="bu">repr</span>.plot.height<span class="op">=</span><span class="dv">10</span>))) <span class="op">+</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  geom_boxplot() <span class="op">+</span></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    theme(legend.position <span class="op">=</span> <span class="st">"right"</span>, </span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    axis.ticks <span class="op">=</span> element_blank(), </span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">0</span>, colour <span class="op">=</span> <span class="st">"black"</span>),</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    axis.text.y <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="dv">1</span>, colour <span class="op">=</span> <span class="st">"black"</span>))</span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>fig1 <span class="op">+</span> labs(y<span class="op">=</span><span class="st">"Relative Humidity"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-execution_count="14">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>population_variance <span class="op">&lt;-</span> function(rv) {</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a> mean((rv <span class="op">-</span> mean(rv)) <span class="op">^</span> <span class="dv">2</span>)</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>weights <span class="op">&lt;-</span> subset$<span class="st">'Relative Humidity'</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>population_variance(weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code> 332.4537</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="15">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>oneway.test(subset$<span class="st">'Relative Humidity'</span> <span class="op">~</span> County,</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> subset,</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  var.equal <span class="op">=</span> FALSE <span class="co"># assuming unequal variances - Welch Anova</span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    One-way analysis of means (not assuming equal variances)</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>data:  </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>subset$"Relative Humidity" and County</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>F = 2611.5, num df = 8, denom df = 15050, p-value &lt; 2.2e-16</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="16">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>aov(subset$<span class="st">'Relative Humidity'</span> <span class="op">~</span> County, data <span class="op">=</span> subset) <span class="op">%&gt;%</span> </span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  report()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>The ANOVA (formula: subset$"Relative Humidity" ~ County) suggests that:
-
-  - The main effect of County is statistically significant and large (F(8, 36153)
-= 2333.44, p &lt; .001; Eta2 = 0.34, 95% CI [0.36, 1.00])
-
-Effect sizes were labelled following Field's (2013) recommendations.</code></pre>
-</div>
-</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(subset<span class="sc">$</span><span class="st">'Relative Humidity'</span> <span class="sc">~</span> County,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subset,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.equal =</span> <span class="cn">FALSE</span> <span class="co"># assuming unequal variances - Welch Anova</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>One-way analysis of means (not assuming equal variances)</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>data: subset$“Relative Humidity” and County F = 2611.5, num df = 8, denom df = 15050, p-value &lt; 2.2e-16</p>
+</blockquote>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(subset<span class="sc">$</span><span class="st">'Relative Humidity'</span> <span class="sc">~</span> County, <span class="at">data =</span> subset) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>The ANOVA (formula: subset$“Relative Humidity” ~ County) suggests that: The main effect of County is statistically significant and large (F(8, 36153) = 2333.44, p &lt; .001; Eta2 = 0.34, 95% CI [0.36, 1.00]) Effect sizes were labelled following Field’s (2013) recommendations.</p>
+</blockquote>
 </section>
 <section id="geographic-locations-effect-to-level-of-cloud-cover" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-locations-effect-to-level-of-cloud-cover">3. Geographic locations effect to level of Cloud Cover</h2>
-<div class="cell" data-execution_count="17">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Change box plot colors by groups</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>fig2 <span class="op">&lt;-</span> ggplot(subset, aes(x<span class="op">=</span>County, y<span class="op">=</span>subset$<span class="st">'Cloud Cover'</span>, fill<span class="op">=</span>County, </span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>                  options(<span class="bu">repr</span>.plot.width<span class="op">=</span><span class="dv">50</span>, <span class="bu">repr</span>.plot.height<span class="op">=</span><span class="dv">10</span>))) <span class="op">+</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  geom_boxplot() <span class="op">+</span></span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>    theme(legend.position <span class="op">=</span> <span class="st">"right"</span>, </span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    axis.ticks <span class="op">=</span> element_blank(), </span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>    axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">0</span>, colour <span class="op">=</span> <span class="st">"black"</span>),</span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    axis.text.y <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="dv">1</span>, colour <span class="op">=</span> <span class="st">"black"</span>))</span>
-<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>fig2 <span class="op">+</span> labs(y<span class="op">=</span><span class="st">"Cloud Cover"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-execution_count="18">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>population_variance <span class="op">&lt;-</span> function(rv) {</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a> mean((rv <span class="op">-</span> mean(rv)) <span class="op">^</span> <span class="dv">2</span>)</span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>weights <span class="op">&lt;-</span> subset$<span class="st">'Cloud Cover'</span></span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>population_variance(weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code> 873.9499</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="19">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>oneway.test(subset$<span class="st">'Cloud Cover'</span> <span class="op">~</span> County,</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> subset,</span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>  var.equal <span class="op">=</span> FALSE <span class="co"># assuming unequal variances - Welch Anova</span></span>
-<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    One-way analysis of means (not assuming equal variances)</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>data:  </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>subset$"Cloud Cover" and County</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>F = 2076.3, num df = 8, denom df = 14927, p-value &lt; 2.2e-16</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="20">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>aov(subset$<span class="st">'Cloud Cover'</span> <span class="op">~</span> County, data <span class="op">=</span> subset) <span class="op">%&gt;%</span> </span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  report()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>The ANOVA (formula: subset$"Cloud Cover" ~ County) suggests that:
-
-  - The main effect of County is statistically significant and large (F(8, 36153)
-= 1029.98, p &lt; .001; Eta2 = 0.19, 95% CI [0.18, 1.00])
-
-Effect sizes were labelled following Field's (2013) recommendations.</code></pre>
-</div>
-</div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(subset<span class="sc">$</span><span class="st">'Cloud Cover'</span> <span class="sc">~</span> County,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subset,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.equal =</span> <span class="cn">FALSE</span> <span class="co"># assuming unequal variances - Welch Anova</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>One-way analysis of means (not assuming equal variances)</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>data: subset$“Cloud Cover” and County F = 2076.3, num df = 8, denom df = 14927, p-value &lt; 2.2e-16</p>
+</blockquote>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(subset<span class="sc">$</span><span class="st">'Cloud Cover'</span> <span class="sc">~</span> County, <span class="at">data =</span> subset) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>The ANOVA (formula: subset$“Cloud Cover” ~ County) suggests that: The main effect of County is statistically significant and large (F(8, 36153) = 1029.98, p &lt; .001; Eta2 = 0.19, 95% CI [0.18, 1.00]) Effect sizes were labelled following Field’s (2013) recommendations.</p>
+</blockquote>
 </section>
 <section id="geographic-locations-effect-to-level-of-wind-direction" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-locations-effect-to-level-of-wind-direction">4. Geographic locations effect to level of Wind Direction</h2>
-<div class="cell" data-execution_count="21">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Change box plot colors by groups</span></span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>fig3 <span class="op">&lt;-</span> ggplot(subset, aes(x<span class="op">=</span>County, y<span class="op">=</span>subset$<span class="st">'Wind Direction'</span>, fill<span class="op">=</span>County, </span>
-<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>                  options(<span class="bu">repr</span>.plot.width<span class="op">=</span><span class="dv">50</span>, <span class="bu">repr</span>.plot.height<span class="op">=</span><span class="dv">10</span>))) <span class="op">+</span></span>
-<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>  geom_boxplot() <span class="op">+</span></span>
-<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>    theme(legend.position <span class="op">=</span> <span class="st">"right"</span>, </span>
-<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>    axis.ticks <span class="op">=</span> element_blank(), </span>
-<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>    axis.text.x <span class="op">=</span> element_text(angle <span class="op">=</span> <span class="dv">45</span>, hjust <span class="op">=</span> <span class="dv">0</span>, colour <span class="op">=</span> <span class="st">"black"</span>),</span>
-<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>    axis.text.y <span class="op">=</span> element_text(hjust <span class="op">=</span> <span class="dv">1</span>, colour <span class="op">=</span> <span class="st">"black"</span>))</span>
-<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>fig3 <span class="op">+</span> labs(y<span class="op">=</span><span class="st">"Wind Direction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div class="cell" data-execution_count="22">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>population_variance <span class="op">&lt;-</span> function(rv) {</span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a> mean((rv <span class="op">-</span> mean(rv)) <span class="op">^</span> <span class="dv">2</span>)</span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a>weights <span class="op">&lt;-</span> subset$<span class="st">'Wind Direction'</span></span>
-<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>population_variance(weights)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code> 3259.399</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="23">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>oneway.test(subset$<span class="st">'Wind Direction'</span> <span class="op">~</span> County,</span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  data <span class="op">=</span> subset,</span>
-<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>  var.equal <span class="op">=</span> FALSE <span class="co"># assuming unequal variances - Welch Anova</span></span>
-<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    One-way analysis of means (not assuming equal variances)</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>data:  </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>subset$"Wind Direction" and County</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>F = 669.95, num df = 8, denom df = 15052, p-value &lt; 2.2e-16</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
-</div>
-<div class="cell" data-execution_count="24">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>R</span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>aov(subset$<span class="st">'Wind Direction'</span> <span class="op">~</span> County, data <span class="op">=</span> subset) <span class="op">%&gt;%</span> </span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  report()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>The ANOVA (formula: subset$"Wind Direction" ~ County) suggests that:
-
-  - The main effect of County is statistically significant and medium (F(8,
-36153) = 635.74, p &lt; .001; Eta2 = 0.12, 95% CI [0.12, 1.00])
-
-Effect sizes were labelled following Field's (2013) recommendations.</code></pre>
-</div>
-</div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(subset<span class="sc">$</span><span class="st">'Wind Direction'</span> <span class="sc">~</span> County,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subset,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">var.equal =</span> <span class="cn">FALSE</span> )</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># assuming unequal variances - Welch Anova</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>One-way analysis of means (not assuming equal variances)</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>data: subset$“Wind Direction” and County F = 669.95, num df = 8, denom df = 15052, p-value &lt; 2.2e-16</p>
+</blockquote>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">aov</span>(subset<span class="sc">$</span><span class="st">'Wind Direction'</span> <span class="sc">~</span> County, <span class="at">data =</span> subset) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">report</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>The ANOVA (formula: subset$“Wind Direction” ~ County) suggests that: The main effect of County is statistically significant and medium (F(8, 36153) = 635.74, p &lt; .001; Eta2 = 0.12, 95% CI [0.12, 1.00]) Effect sizes were labelled following Field’s (2013) recommendations.</p>
+</blockquote>
 </section>
 </section>
 <section id="conclusion" class="level1">

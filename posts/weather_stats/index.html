@@ -272,6 +272,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Welch ANOVA Test</h1>
 <section id="geographic-locations-effect-to-level-of-temperature" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-locations-effect-to-level-of-temperature">1. Geographic locations effect to level of Temperature</h2>
+<div class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(Temperature <span class="sc">~</span> County,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subset,</span>
@@ -292,6 +297,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="geographic-locations-effect-to-level-of-relative-humidity" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-locations-effect-to-level-of-relative-humidity">2. Geographic locations effect to level of Relative Humidity</h2>
+<div class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(subset<span class="sc">$</span><span class="st">'Relative Humidity'</span> <span class="sc">~</span> County,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subset,</span>
@@ -312,6 +322,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="geographic-locations-effect-to-level-of-cloud-cover" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-locations-effect-to-level-of-cloud-cover">3. Geographic locations effect to level of Cloud Cover</h2>
+<div class="cell" data-execution_count="17">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+</div>
+</div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(subset<span class="sc">$</span><span class="st">'Cloud Cover'</span> <span class="sc">~</span> County,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subset,</span>
@@ -332,6 +347,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="geographic-locations-effect-to-level-of-wind-direction" class="level2">
 <h2 class="anchored" data-anchor-id="geographic-locations-effect-to-level-of-wind-direction">4. Geographic locations effect to level of Wind Direction</h2>
+<div class="cell" data-execution_count="21">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+</div>
+</div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%%</span>R</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(subset<span class="sc">$</span><span class="st">'Wind Direction'</span> <span class="sc">~</span> County,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> subset,</span>
